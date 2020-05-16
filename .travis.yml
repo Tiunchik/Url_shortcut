@@ -1,0 +1,20 @@
+language: java
+jdk:
+  - openjdk13
+
+services:
+  - postgresql
+
+before_install:
+  - psql -c 'create database url;' -U postgres
+
+notifications:
+  email:
+    recipients:
+      - senebh@gmail.com
+    on_success: never # default: change
+    on_failure: always # default: always
+
+#env:
+#  global:
+#   CODECOV_TOKEN="59fad60d-ac7c-43f9-996a-eca6fd83bd6f"

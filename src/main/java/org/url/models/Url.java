@@ -5,8 +5,10 @@
  */
 package org.url.models;
 
+import org.hibernate.annotations.GenerationTime;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.processing.Generated;
 import javax.persistence.*;
 import java.util.Objects;
 
@@ -30,6 +32,7 @@ public class Url {
 
     @Column(nullable = false)
     private String url;
+
 
     private long statistic;
 

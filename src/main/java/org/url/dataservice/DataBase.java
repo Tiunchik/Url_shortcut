@@ -7,6 +7,7 @@ package org.url.dataservice;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.url.models.Site;
@@ -60,5 +61,13 @@ public class DataBase {
 
     public List<Url> findBySite(Site site) {
         return urlRep.findBySite(site);
+    }
+
+    public void upCounter(String id) {
+        urlRep.upCounter(id);
+    }
+
+    public Url findUrlByUrl(String url) {
+        return urlRep.findUrlByUrl(url);
     }
 }

@@ -48,10 +48,12 @@ public class UrlController {
 
     @PostMapping(value = "/convert")
     public ResponseEntity<String> addUrl(@RequestBody Url url, Principal principal) {
+        if (repository.findUrlByUrl(url.getUrl()) != null) {
+            return new ResponseEntity<>("This site has benn alredy registered", HttpStatus.BAD_REQUEST);
+        }
         String login = principal.getName();
         url.setSite(repository.findByLoginOrSite(login, login));
         url.setCode(login + creator.generateStringCode());
-
         repository.save(url);
         ObjectNode answer = mapper.createObjectNode();
         answer.put("code", url.getCode());
@@ -62,8 +64,7 @@ public class UrlController {
     @ResponseStatus(HttpStatus.FOUND)
     public RedirectView getUrl(@PathVariable String code, HttpServletRequest request) {
         Url url = repository.findByCode(code);
-        url.setStatistic(url.getStatistic() + 1L);
-        repository.save(url);
+        repository.upCounter(url.getCode());
         return new RedirectView(url.getUrl());
     }
 

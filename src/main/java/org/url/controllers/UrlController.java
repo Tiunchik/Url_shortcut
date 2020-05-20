@@ -49,7 +49,7 @@ public class UrlController {
     @PostMapping(value = "/convert")
     public ResponseEntity<String> addUrl(@RequestBody Url url, Principal principal) {
         if (repository.findUrlByUrl(url.getUrl()) != null) {
-            return new ResponseEntity<>("This site has benn alredy registered", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("This site has been already registered", HttpStatus.BAD_REQUEST);
         }
         String login = principal.getName();
         url.setSite(repository.findByLoginOrSite(login, login));

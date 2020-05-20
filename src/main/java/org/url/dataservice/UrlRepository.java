@@ -5,13 +5,14 @@
  */
 package org.url.dataservice;
 
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 import org.url.models.Site;
 import org.url.models.Url;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 /**
@@ -27,7 +28,9 @@ public interface UrlRepository extends PagingAndSortingRepository<Url, String> {
 
     Url findUrlByUrl(String url);
 
-    @Query("UPDATE Url AS t set t.statistic = t.statistic + 1 WHERE t.code = :code")
-    Url upCounter(@Param("code") String id);
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE url SET statistic = statistic + 1 WHERE code = :code", nativeQuery = true)
+    void upCounter(@Param("code") String code);
 
 }
